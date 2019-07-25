@@ -32,6 +32,13 @@ public class DeliveryPackage {
         this.status = 0;
     }
 
+    public DeliveryPackage(long waybillNumber, String customerName, String phoneNumber, Date bookTime) {
+        this.waybillNumber = waybillNumber;
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.bookTime = bookTime;
+    }
+
     public long getId() {
         return id;
     }

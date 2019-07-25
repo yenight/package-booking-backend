@@ -20,6 +20,8 @@ public class DeliveryPackageController {
 
     @GetMapping("/deliveryPackages")
     public ResponseEntity getPackages(@RequestParam(defaultValue = "-1") int status) {
+        if (status < -1 || status > 2)
+            return ResponseEntity.badRequest().build();
         List<DeliveryPackage> deliveryPackages;
         deliveryPackages = status == -1? deliveryPackageService.getPackages() : deliveryPackageService.getPackageByStatus(status);
         return ResponseEntity.ok(deliveryPackages);
@@ -37,20 +39,11 @@ public class DeliveryPackageController {
 
     @PatchMapping("/deliveryPackages")
     public ResponseEntity updatePackage(@RequestBody DeliveryPackage deliveryPackage) {
-        int status = -1;
-        if (deliveryPackage.getBookTime() == null) {
-            status = deliveryPackageService.updatePackageByStatusIsTwo(deliveryPackage.getWaybillNumber());
+        int status = deliveryPackageService.updatePackage(deliveryPackage);
+        if (status == 1) {
             return ResponseEntity.ok(status);
         } else {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(deliveryPackage.getBookTime());
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            if (hour >= 9 && hour <= 20) {
-                status = deliveryPackageService.updatePackageTimeByWayBillNumber(deliveryPackage.getWaybillNumber(), deliveryPackage.getBookTime());
-                return ResponseEntity.ok(status);
-            } else {
-                return ResponseEntity.badRequest().body("不是营业时间,无法预约取件");
-            }
+            return ResponseEntity.badRequest().body("不是营业时间,无法预约取件");
         }
     }
 

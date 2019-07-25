@@ -3,9 +3,11 @@ package com.oocl.packagebooking.service;
 import com.oocl.packagebooking.model.DeliveryPackage;
 import com.oocl.packagebooking.repository.DeliveryPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +32,18 @@ public class DeliveryPackageService {
         return deliveryPackageRepository.findByStatusIs(status);
     }
 
-    public int updatePackageByStatusIsTwo(long waybillNumber) {
-        return deliveryPackageRepository.updatePackageByStatusIsTwo(waybillNumber);
-    }
-
-    public int updatePackageTimeByWayBillNumber(long waybillNumber, Date date) {
-        return deliveryPackageRepository.updatePackageTimeByWayBillNumber(date, waybillNumber);
+    public int updatePackage (DeliveryPackage deliveryPackage) {
+        int status = -1;
+        if (deliveryPackage.getBookTime() == null) {
+            status = deliveryPackageRepository.updatePackageByStatusIsTwo(deliveryPackage.getWaybillNumber());
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(deliveryPackage.getBookTime());
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            if (hour >= 9 && hour <= 20) {
+                status = deliveryPackageRepository.updatePackageTimeByWayBillNumber(deliveryPackage.getBookTime(), deliveryPackage.getWaybillNumber());
+            }
+        }
+        return status;
     }
 }
