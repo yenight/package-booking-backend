@@ -3,12 +3,9 @@ package com.oocl.packagebooking.service;
 import com.oocl.packagebooking.model.DeliveryPackage;
 import com.oocl.packagebooking.repository.DeliveryPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,7 +33,7 @@ public class DeliveryPackageService {
         int status = -1;
         if (deliveryPackage.getBookTime() == null) {
             status = deliveryPackageRepository.updatePackageByStatusIsTwo(deliveryPackage.getWaybillNumber());
-        } else {
+        } else if (deliveryPackage.getWaybillNumber() > 0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(deliveryPackage.getBookTime());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);

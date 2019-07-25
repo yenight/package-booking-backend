@@ -1,14 +1,11 @@
 package com.oocl.packagebooking.controller;
 
 import com.oocl.packagebooking.model.DeliveryPackage;
-import com.oocl.packagebooking.repository.DeliveryPackageRepository;
 import com.oocl.packagebooking.service.DeliveryPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -43,7 +40,7 @@ public class DeliveryPackageController {
         if (status == 1) {
             return ResponseEntity.ok(status);
         } else {
-            return ResponseEntity.badRequest().body("不是营业时间,无法预约取件");
+            return ResponseEntity.badRequest().build();
         }
     }
 
