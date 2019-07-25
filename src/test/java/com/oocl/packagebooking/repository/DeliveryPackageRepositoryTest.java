@@ -50,10 +50,10 @@ public class DeliveryPackageRepositoryTest {
         int status = deliveryPackageRepository.updatePackageByStatusIsTwo(1);
         Assert.assertEquals(1, status);
     }
-//
-//    @Test
-//    public void should_return_1_when_update_by_waybill_number_to_update_bookTime () {
-//        int status = deliveryPackageRepository.updatePackageTimeByWayBillNumber(new Date(), 1);
-//        Assert.assertEquals(1, status);
-//    }
+
+    @Test
+    public void should_return_1_when_update_by_waybill_number_to_update_bookTime () {
+        int status = deliveryPackageRepository.updatePackageTimeByWayBillNumber(new Date(), 1);
+        Assert.assertEquals(1, status);
+    }
 }
