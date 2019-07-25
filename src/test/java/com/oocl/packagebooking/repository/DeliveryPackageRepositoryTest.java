@@ -39,11 +39,11 @@ public class DeliveryPackageRepositoryTest {
         Assert.assertEquals(0, size);
     }
 
-//    @Test
-//    public void should_return_size_3_when_find_by_status () {
-//        int size = deliveryPackageRepository.findByStatusIs(0).size();
-//        Assert.assertEquals(3, size);
-//    }
+    @Test
+    public void should_return_size_3_when_find_by_status () {
+        int size = deliveryPackageRepository.findByStatusIs(0).size();
+        Assert.assertEquals(3, size);
+    }
 //
 //    @Test
 //    public void should_return_1_when_update_by_status_is_2 () {
