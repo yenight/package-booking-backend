@@ -44,12 +44,12 @@ public class DeliveryPackageRepositoryTest {
         int size = deliveryPackageRepository.findByStatusIs(0).size();
         Assert.assertEquals(3, size);
     }
-//
-//    @Test
-//    public void should_return_1_when_update_by_status_is_2 () {
-//        int status = deliveryPackageRepository.updatePackageByStatusIsTwo(1);
-//        Assert.assertEquals(1, status);
-//    }
+
+    @Test
+    public void should_return_1_when_update_by_status_is_2 () {
+        int status = deliveryPackageRepository.updatePackageByStatusIsTwo(1);
+        Assert.assertEquals(1, status);
+    }
 //
 //    @Test
 //    public void should_return_1_when_update_by_waybill_number_to_update_bookTime () {
