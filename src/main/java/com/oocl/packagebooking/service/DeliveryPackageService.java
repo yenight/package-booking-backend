@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,7 +30,11 @@ public class DeliveryPackageService {
         return deliveryPackageRepository.findByStatusIs(status);
     }
 
-    public int updatePackageByStatusIsTwo(long id) {
-        return deliveryPackageRepository.updatePackageByStatusIsTwo(id);
+    public int updatePackageByStatusIsTwo(long waybillNumber) {
+        return deliveryPackageRepository.updatePackageByStatusIsTwo(waybillNumber);
+    }
+
+    public int updatePackageTimeByWayBillNumber(long waybillNumber, Date date) {
+        return deliveryPackageRepository.updatePackageTimeByWayBillNumber(date, waybillNumber);
     }
 }

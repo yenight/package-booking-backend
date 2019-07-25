@@ -40,14 +40,14 @@ public class DeliveryPackageControllerTest {
         mockMvc.perform(post("/deliveryPackages")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content("{\n" +
-                        "\t\"customerName\": \"ccc\",\n" +
-                        "\t\"phoneNumber\": \"2312121\",\n" +
-                        "\t\"status\": 1,\n" +
-                        "\t\"bookTime\": \"2019-07-24 10:00:00\"\n" +
+                        "\t\"waybillNumber\": 12312213,\n" +
+                        "\t\"customerName\": \"eeee\",\n" +
+                        "\t\"phoneNumber\": \"23123\"\n" +
                         "}"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerName").value("ccc"));
+                .andExpect(jsonPath("$.waybillNumber").value(12312213))
+                .andExpect(jsonPath("$.customerName").value("eeee"));
     }
 
     @Test
@@ -56,33 +56,31 @@ public class DeliveryPackageControllerTest {
         mockMvc.perform(get("/deliveryPackages?status=0"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[\n" +
-                        "    {\n" +
-                        "        \"id\": 1,\n" +
-                        "        \"customerName\": \"aaa\",\n" +
-                        "        \"phoneNumber\": \"456\",\n" +
-                        "        \"status\": 0,\n" +
-                        "        \"bookTime\": \"2019-07-24 10:00:00\"\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "        \"id\": 36,\n" +
-                        "        \"customerName\": \"ddd\",\n" +
-                        "        \"phoneNumber\": \"432342132\",\n" +
-                        "        \"status\": 0,\n" +
-                        "        \"bookTime\": \"2019-07-24 18:00:00\"\n" +
-                        "    }\n" +
-                        "]"));
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test
     @Transactional
-    public void should_return_1_when_request_update_package_by_id_api() throws Exception{
-        mockMvc.perform(patch("/deliveryPackages/66"))
+    public void should_return_1_when_request_update_package_by_waybillNumber_api() throws Exception{
+        mockMvc.perform(patch("/deliveryPackages/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("1"));
     }
 
+    @Test
+    @Transactional
+    public void should_return_1_when_request_update_package_time_by_waybillNumber_api() throws Exception{
+        mockMvc.perform(patch("/deliveryPackages")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\n" +
+                        "\t\"waybillNumber\": 12312213,\n" +
+                        "\t\"bookTime\": \"2019-07-24 18:00:00\"\n" +
+                        "}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("1"));
+    }
 
 
 }

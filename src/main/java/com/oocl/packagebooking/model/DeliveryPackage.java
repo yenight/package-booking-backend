@@ -14,6 +14,7 @@ public class DeliveryPackage {
     @GeneratedValue
     private long id;
 
+    private long waybillNumber;
     private String customerName;
     private String phoneNumber;
     private int status;
@@ -24,11 +25,11 @@ public class DeliveryPackage {
     public DeliveryPackage() {
     }
 
-    public DeliveryPackage(String customerName, String phoneNumber, int status, Date bookTime) {
+    public DeliveryPackage(long waybillNumber, String customerName, String phoneNumber) {
+        this.waybillNumber = waybillNumber;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
-        this.status = status;
-        this.bookTime = bookTime;
+        this.status = 0;
     }
 
     public long getId() {
@@ -37,6 +38,14 @@ public class DeliveryPackage {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getWaybillNumber() {
+        return waybillNumber;
+    }
+
+    public void setWaybillNumber(long waybillNumber) {
+        this.waybillNumber = waybillNumber;
     }
 
     public String getCustomerName() {

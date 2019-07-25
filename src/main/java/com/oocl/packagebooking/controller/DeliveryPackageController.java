@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,11 +33,17 @@ public class DeliveryPackageController {
         }
     }
 
-    @PatchMapping("/deliveryPackages/{id}")
-    public ResponseEntity updatePackageByStatusIsTwo(@PathVariable long id) {
-        int status = deliveryPackageService.updatePackageByStatusIsTwo(id);
+    @PatchMapping("/deliveryPackages")
+    public ResponseEntity updatePackage(@RequestBody DeliveryPackage deliveryPackage) {
+        int status = -1;
+        if (deliveryPackage.getBookTime() == null) {
+            status = deliveryPackageService.updatePackageByStatusIsTwo(deliveryPackage.getWaybillNumber());
+        } else {
+            status = deliveryPackageService.updatePackageTimeByWayBillNumber(deliveryPackage.getWaybillNumber(), deliveryPackage.getBookTime());
+        }
         return ResponseEntity.ok(status);
     }
+
 
 
 }

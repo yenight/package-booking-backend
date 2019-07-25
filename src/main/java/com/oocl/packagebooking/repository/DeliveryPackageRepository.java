@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DeliveryPackageRepository extends JpaRepository<DeliveryPackage, Long> {
@@ -14,7 +15,12 @@ public interface DeliveryPackageRepository extends JpaRepository<DeliveryPackage
 
     @Modifying
     @Transactional
-    @Query("update DeliveryPackage dp set dp.status = 2 where dp.id = ?1")
-    int updatePackageByStatusIsTwo(long id);
+    @Query("update DeliveryPackage dp set dp.status = 2 where dp.waybillNumber = ?1")
+    int updatePackageByStatusIsTwo(long waybillNumber);
+
+    @Modifying
+    @Transactional
+    @Query("update DeliveryPackage dp set dp.bookTime = ?1 where dp.waybillNumber = ?2")
+    int updatePackageTimeByWayBillNumber(Date date, long waybillNumber);
 
 }
