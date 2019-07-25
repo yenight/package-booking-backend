@@ -1,17 +1,24 @@
 package com.oocl.packagebooking.controller;
 
+import com.oocl.packagebooking.model.DeliveryPackage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -25,9 +32,19 @@ public class DeliveryPackageControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private DeliveryPackageController deliveryPackageController;
+
     @Test
     @Transactional
     public void should_return_all_package_when_request_find_all_package_api() throws Exception{
+        List<DeliveryPackage> deliveryPackages = new ArrayList<>();
+        deliveryPackages.add(new DeliveryPackage(123456, "zxc", "666666"));
+        deliveryPackages.add(new DeliveryPackage(654321, "cxz", "7777777"));
+
+//        given().willReturn(deliveryPackages);
+
+
         mockMvc.perform(get("/deliveryPackages"))
                 .andDo(print())
                 .andExpect(status().isOk());

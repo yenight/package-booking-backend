@@ -20,7 +20,7 @@ public interface DeliveryPackageRepository extends JpaRepository<DeliveryPackage
 
     @Modifying
     @Transactional
-    @Query("update DeliveryPackage dp set dp.bookTime = ?1 where dp.waybillNumber = ?2")
+    @Query("update DeliveryPackage dp set dp.bookTime = ?1, dp.status = 1 where dp.waybillNumber = ?2")
     int updatePackageTimeByWayBillNumber(Date date, long waybillNumber);
 
 }

@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class DeliveryPackageController {
 
     @Autowired
@@ -38,10 +40,18 @@ public class DeliveryPackageController {
         int status = -1;
         if (deliveryPackage.getBookTime() == null) {
             status = deliveryPackageService.updatePackageByStatusIsTwo(deliveryPackage.getWaybillNumber());
+            return ResponseEntity.ok(status);
         } else {
-            status = deliveryPackageService.updatePackageTimeByWayBillNumber(deliveryPackage.getWaybillNumber(), deliveryPackage.getBookTime());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(deliveryPackage.getBookTime());
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            if (hour >= 9 && hour <= 20) {
+                status = deliveryPackageService.updatePackageTimeByWayBillNumber(deliveryPackage.getWaybillNumber(), deliveryPackage.getBookTime());
+                return ResponseEntity.ok(status);
+            } else {
+                return ResponseEntity.badRequest().body("不是营业时间,无法预约取件");
+            }
         }
-        return ResponseEntity.ok(status);
     }
 
 
