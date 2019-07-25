@@ -32,5 +32,11 @@ public class DeliveryPackageController {
         }
     }
 
+    @PatchMapping("/deliveryPackages/{id}")
+    public ResponseEntity updatePackageByStatusIsTwo(@PathVariable long id) {
+        int status = deliveryPackageService.updatePackageByStatusIsTwo(id);
+        return ResponseEntity.ok(status);
+    }
+
 
 }

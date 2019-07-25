@@ -12,8 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -73,6 +72,15 @@ public class DeliveryPackageControllerTest {
                         "        \"bookTime\": \"2019-07-24 18:00:00\"\n" +
                         "    }\n" +
                         "]"));
+    }
+
+    @Test
+    @Transactional
+    public void should_return_1_when_request_update_package_by_id_api() throws Exception{
+        mockMvc.perform(patch("/deliveryPackages/66"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("1"));
     }
 
 
