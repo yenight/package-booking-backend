@@ -51,6 +51,30 @@ public class DeliveryPackageControllerTest {
                 .andExpect(jsonPath("$.customerName").value("ccc"));
     }
 
+    @Test
+    @Transactional
+    public void should_return_packages_when_request_find_packages_by_status_api() throws Exception{
+        mockMvc.perform(get("/deliveryPackages?status=0"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("[\n" +
+                        "    {\n" +
+                        "        \"id\": 1,\n" +
+                        "        \"customerName\": \"aaa\",\n" +
+                        "        \"phoneNumber\": \"456\",\n" +
+                        "        \"status\": 0,\n" +
+                        "        \"bookTime\": \"2019-07-24 10:00:00\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "        \"id\": 36,\n" +
+                        "        \"customerName\": \"ddd\",\n" +
+                        "        \"phoneNumber\": \"432342132\",\n" +
+                        "        \"status\": 0,\n" +
+                        "        \"bookTime\": \"2019-07-24 18:00:00\"\n" +
+                        "    }\n" +
+                        "]"));
+    }
+
 
 
 }

@@ -23,4 +23,8 @@ public class DeliveryPackageService {
         }
         return null;
     }
+
+    public List<DeliveryPackage> getPackageByStatus(int status) {
+        return deliveryPackageRepository.findByStatusIs(status);
+    }
 }
