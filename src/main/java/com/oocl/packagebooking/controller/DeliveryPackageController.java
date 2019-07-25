@@ -6,6 +6,8 @@ import com.oocl.packagebooking.service.DeliveryPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,6 +22,16 @@ public class DeliveryPackageController {
     public ResponseEntity getPackages() {
         List<DeliveryPackage> deliveryPackages = deliveryPackageService.getPackages();
         return ResponseEntity.ok(deliveryPackages);
+    }
+
+    @PostMapping("/deliveryPackages")
+    public ResponseEntity createPackage(@RequestBody DeliveryPackage deliveryPackage) {
+        DeliveryPackage createdPackage = deliveryPackageService.createdPackage(deliveryPackage);
+        if (createdPackage != null) {
+            return ResponseEntity.ok(createdPackage);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 

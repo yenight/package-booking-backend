@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @RunWith(SpringRunner.class)
@@ -32,6 +33,22 @@ public class DeliveryPackageControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 //                .andExpect();
+    }
+
+    @Test
+    @Transactional
+    public void should_return_package_when_request_created_all_package_api() throws Exception{
+        mockMvc.perform(post("/deliveryPackages")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\n" +
+                        "\t\"customerName\": \"ccc\",\n" +
+                        "\t\"phoneNumber\": \"2312121\",\n" +
+                        "\t\"status\": 1,\n" +
+                        "\t\"bookTime\": \"2019-07-24 10:00:00\"\n" +
+                        "}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.customerName").value("ccc"));
     }
 
 

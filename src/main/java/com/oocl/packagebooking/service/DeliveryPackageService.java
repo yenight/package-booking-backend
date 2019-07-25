@@ -16,4 +16,11 @@ public class DeliveryPackageService {
     public List<DeliveryPackage> getPackages() {
         return deliveryPackageRepository.findAll();
     }
+
+    public DeliveryPackage createdPackage(DeliveryPackage deliveryPackage) {
+        if (deliveryPackage != null) {
+            return deliveryPackageRepository.saveAndFlush(deliveryPackage);
+        }
+        return null;
+    }
 }

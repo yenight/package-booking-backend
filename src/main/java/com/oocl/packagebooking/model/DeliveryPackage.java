@@ -1,5 +1,7 @@
 package com.oocl.packagebooking.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,16 +14,18 @@ public class DeliveryPackage {
     @GeneratedValue
     private long id;
 
-    private String CustomerName;
+    private String customerName;
     private String phoneNumber;
     private int status;
+
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date bookTime;
 
     public DeliveryPackage() {
     }
 
     public DeliveryPackage(String customerName, String phoneNumber, int status, Date bookTime) {
-        CustomerName = customerName;
+        this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.bookTime = bookTime;
@@ -36,11 +40,11 @@ public class DeliveryPackage {
     }
 
     public String getCustomerName() {
-        return CustomerName;
+        return customerName;
     }
 
     public void setCustomerName(String customerName) {
-        CustomerName = customerName;
+        this.customerName = customerName;
     }
 
     public String getPhoneNumber() {
